@@ -1,16 +1,40 @@
 import { useMediaQuery } from '@mui/material';
-import { List, SimpleList, Datagrid, TextField, EmailField } from 'react-admin';
+import { Edit,SimpleForm,useRecordContext,TextInput,ReferenceInput ,List, SimpleList, Datagrid, TextField, EmailField } from 'react-admin';
+import PostPagination from './MyPagination';
+
+const postFilters = [
+    <TextInput source="q" label="Search" alwaysOn />,
+    <ReferenceInput source="userId" label="User" reference="users" />,
+];
+
+const PostTitle = () => {
+    const record = useRecordContext();
+    return <span>Post {record ? `"${record.title}"` : ''}</span>;
+};
+
+export const UserEdit = () => (
+    <Edit title={<PostTitle />}>
+        <SimpleForm>
+            <TextInput disabled source="id" />
+            <TextInput source="roleId" />
+        </SimpleForm>
+    </Edit>
+);
+
+
+
 
 
 export const UserList = () => {
     return (
-        <List>
+        <List  filters={postFilters}  pagination={<PostPagination />}>
                 <Datagrid rowClick="show">
                     <TextField source="id" />
                     <TextField source="name" />
                     <TextField source="username" />
                     <EmailField source="email" />
                     <TextField source="phone" />
+                    <TextField source="roleId" />
                     <TextField source="avatar" />
                     <TextField source="createdAt" />
                 </Datagrid>
@@ -18,4 +42,4 @@ export const UserList = () => {
     );
 };
 
-//['id', 'name', 'username', 'email', 'avatar', 'phone','createdAt']
+//['id', 'name', 'username', 'email', 'avatar', 'phone','roleId','createdAt']

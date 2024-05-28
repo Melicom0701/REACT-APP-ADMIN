@@ -2,9 +2,9 @@ import { Admin, Resource, ShowGuesser } from 'react-admin';
 import jsonServerProvider from 'ra-data-json-server';
 import PostIcon from '@mui/icons-material/Book';
 import UserIcon from '@mui/icons-material/Group';
-import { UserList } from './users.js';
+import { UserList,UserEdit } from './users.js';
 import { Dashboard } from './Dashboard';
-import { DestinationList } from './destination.js';
+import { DestinationList,DestinationEdit } from './destination.js';
 
 const API = process.env.REACT_APP_ENDPOINT;
 console.log(API);
@@ -15,19 +15,22 @@ const AdminApp = () => (
         dataProvider={dataProvider}
         dashboard={Dashboard}
     >
-        <Resource
+        <Resource 
+          
             name="destination"
             list={DestinationList}
-            // edit={PostEdit}
             // create={PostCreate}
+            show={ShowGuesser}
+            search = {false}
+            edit = {DestinationEdit}
             icon={PostIcon}
         />
         <Resource
             name="user"
             list={UserList}
+            edit={UserEdit}
             show={ShowGuesser}
             icon={UserIcon}
-            recordRepresentation="name" 
         />
     </Admin>
 );

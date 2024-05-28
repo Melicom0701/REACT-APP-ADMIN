@@ -1,11 +1,41 @@
 import { useMediaQuery } from '@mui/material';
-import { List, SimpleList, Datagrid, TextField,Pagination, EmailField } from 'react-admin';
+import {useRecordContext,Edit, SimpleForm,List, SimpleList, Datagrid, TextField,Pagination, EmailField, TextInput,ReferenceInput } from 'react-admin';
 import PostPagination from './MyPagination';
+
+const postFilters = [
+    <TextInput source="q" label="Search" alwaysOn />,
+    <ReferenceInput source="userId" label="User" reference="users" />,
+];
+
+const PostTitle = () => {
+    const record = useRecordContext();
+    return <span>Post {record ? `"${record.title}"` : ''}</span>;
+};
+
+export const DestinationEdit = () => (
+    <Edit title={<PostTitle />}>
+        <SimpleForm>
+            <TextInput disabled source="id" />
+            <TextInput source="name" />
+            <TextInput source="location" />
+            <TextInput source="description" />
+            <TextInput source="image" />
+            <TextInput source="startTime" />
+            <TextInput source="endTime" />
+            <TextInput source="averageRating" />
+            <TextInput source="averagePrice" />
+            <TextInput source="x" />
+            <TextInput source="y" />
+            <TextInput source="category" />
+
+        </SimpleForm>
+    </Edit>
+);
 
 
 export const DestinationList = () => {
     return (
-        <List  pagination={<PostPagination />}>
+        <List filters={postFilters}  pagination={<PostPagination />}>
                 <Datagrid rowClick="show">
                     <TextField source="id" />
                     <TextField source="name" />
@@ -13,13 +43,14 @@ export const DestinationList = () => {
                     <TextField source="averageRating" />
                     <TextField source="averagePrice" />
                     <TextField source="x" />
-                    <TextField source="y" />
+                    <TextField source="y" />                    
                     <TextField source="category" />
                     <TextField source="createdAt" />
                 </Datagrid>
         </List>
     );
 };
+
 
 // {
 //     "id": "1",
