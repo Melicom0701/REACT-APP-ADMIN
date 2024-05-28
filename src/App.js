@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { Admin, Resource, ShowGuesser } from 'react-admin';
+import jsonServerProvider from 'ra-data-json-server';
+import PostIcon from '@mui/icons-material/Book';
+import UserIcon from '@mui/icons-material/Group';
+import { UserList } from './users.js';
+import { Dashboard } from './Dashboard';
+import { DestinationList } from './destination.js';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const API = process.env.REACT_APP_ENDPOINT;
+console.log(API);
+const dataProvider = jsonServerProvider('http://127.0.0.1:8000');
 
-export default App;
+const AdminApp = () => (
+    <Admin
+        dataProvider={dataProvider}
+        dashboard={Dashboard}
+    >
+        <Resource
+            name="destination"
+            list={DestinationList}
+            // edit={PostEdit}
+            // create={PostCreate}
+            icon={PostIcon}
+        />
+        <Resource
+            name="user"
+            list={UserList}
+            show={ShowGuesser}
+            icon={UserIcon}
+            recordRepresentation="name" 
+        />
+    </Admin>
+);
+
+export default AdminApp;
