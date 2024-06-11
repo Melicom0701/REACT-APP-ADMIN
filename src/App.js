@@ -5,13 +5,14 @@ import UserIcon from '@mui/icons-material/Group';
 import { UserList,UserEdit } from './users.js';
 import { Dashboard } from './Dashboard';
 import { DestinationList,DestinationEdit } from './destination.js';
-
+import { authProvider } from './authProvider.ts';
 const API = process.env.REACT_APP_ENDPOINT;
 console.log(API);
 const dataProvider = jsonServerProvider('http://127.0.0.1:8000');
 
 const AdminApp = () => (
     <Admin
+        authProvider={authProvider}
         dataProvider={dataProvider}
         dashboard={Dashboard}
     >
